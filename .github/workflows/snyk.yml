@@ -4,8 +4,19 @@ jobs:
   snyk:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: Run Snyk to check for vulnerabilities
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Snyk Test for package.json
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: test --file=Globo_SecDevLabs/owasp-top10-2021-apps/a1/tictactoe/package.json
+
+      - name: Run Snyk Test for package-lock.json
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: test --file=Globo_SecDevLabs/owasp-top10-2021-apps/a1/tictactoe/package-lock.json
